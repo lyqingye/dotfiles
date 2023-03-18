@@ -80,6 +80,8 @@ antigen bundle git
 antigen bundle pip
 antigen bundle jeffreytse/zsh-vi-mode
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
 
 # 配置终端 wezterm
 mkdir -p $HOME/.config/wezterm
