@@ -237,7 +237,44 @@ nvim $HOME/.config/wezterm/wezterm.lua
 
 ### vim
 ```shell
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+#uninstall lunarvim
+bash ~/.local/share/lunarvim/lvim/utils/installer/uninstall.sh
+
+# uninstall old vim configs
+rm -rf ~/.config/nvim 
+rm -rf ~/.local/share/nvim
+rm -rf ~/.local/state/nvim
+rm -rf ~/.cache/nvim 
+
+# install lazyvim
+git clone https://github.com/LazyVim/starter ~/.config/nvim
+
+# custom config
+nvim  ~/.config/nvim/lua/plugins/custom.lua
+
+return {
+  { "navarasu/onedark.nvim" },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "onedark",
+    },
+  },
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    cmd = "Neotree",
+    opts = {
+      close_if_last_window = true,
+      window = {
+        mappings = {
+          ["<space>"] = "none",
+          ["o"] = "open",
+        },
+      },
+    },
+  },
+}
 
 ```
 
