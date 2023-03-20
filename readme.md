@@ -1,4 +1,118 @@
+### 安装linux
+```shell
+# 调整时间
+timedatectl set-ntp true 
+timedatectl status
 
+# 更换源
+vim /etc/pacman.d/mirrorlist
+Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+
+# 分区btrfs
+cfdisk /dev/{你的磁盘}
+mkfs.fat -F 32 /dev/{引导分区}
+mkfs.btrfs -m single -L btrfs-arch /dev/{root分区}
+
+# 挂载
+mount /dev/{root分区} /mnt
+mount --mkdir /dev/{引导分区} /mnt/boot
+
+# 创建子卷
+btrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@var
+
+# 挂载子卷
+umount /mnt
+mount -o noatime,nodiratime,subvol=@ /dev/{系统分区} /mnt
+mount --mkdir -o noatime,nodiratime,subvol=@home /dev/{系统分区} /mnt/home
+mount --mkdir -o noatime,nodiratime,subvol=@var /dev/{系统分区} /mnt/var
+
+# 开始安装基本的操作系统
+pacstrap -i /mnt base base-devel linux linux-firmware snapper
+
+# 一些基础包
+pacstrap -i /mnt networkmanager sddm neovim zsh git make 
+systemctl enable NetworkManager # 网络管理器
+systemctl enable sddm # 登陆会话
+
+# 生成grub
+genfstab -U /mnt > /mnt/etc/fstab
+
+# 切换到新安装的系统
+arch-chroot /mnt
+
+# 设置时区
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+hwclock --systohc
+
+# 设置地区及语言
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
+# 主机名
+echo "archlinux" > /etc/hostname
+
+# 编辑hosts
+nvim /etc/hosts
+
+127.0.0.1       localhost
+::1             localhost
+127.0.1.1       archlinux
+
+# 修改root密码
+passwd root
+
+# 安装微码
+pacman -S amd-ucode # AMD
+
+# 创建引导
+pacman -S grub efibootmgr os-prober
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=archlinux
+
+# 修改引导日志级别
+nvim /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT 改为5
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# 加载btrfs
+nvim /etc/mkinitcpio.conf
+添加 btrfs 到 MODULES=(...)行
+找到 HOOKS=(...)行，更换fsck为btrfs
+最终你看到的/etc/mkinitcpio.conf文件格式为
+MODULES=(btrfs)
+HOOKS=(base udev autodetect modconf block filesystems keyboard btrfs)
+mkinitcpio -p linux
+
+# 生成引导配置
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# 创建新用户
+useradd -m  -G wheel -s /bin/zsh USERNAME
+passwd USERNAME
+
+# sudo权限
+nvim /etc/sudoers
+找到如下这样的一行，把前面的注释符号 # 去掉：
+sudoers
+#%wheel ALL=(ALL:ALL) ALL
+
+# 开启32位库
+nvim /etc/pacman.conf
+去掉 [multilib] 一节中两行的注释，来开启 32 位库支持
+
+# 更新系统
+pacman -Syyu
+
+# 安装基本桌面软件
+pacman -S plasma-meta konsole dolphin
+
+# 重启
+exit
+reboot
+```
 
 ### 基本包
 - zsh 
@@ -26,11 +140,12 @@
 - lazygit (git-ui 命令行版)
 - ripgrep (搜索工具)
 ```shell
-pacman -S zsh neovim git make neofetch htop kdwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools
+pacman -S zsh neovim git make neofetch htop kdwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools openssh
 systemctl enable docker
 systemctl start docker
+systemctl enable sshd
 # 注销后生效
-sudo usermo -a -G docker lyqingye
+sudo usermod -a -G docker lyqingye
 
 ```
 
