@@ -139,8 +139,10 @@ reboot
 - playerctl (多媒体控制)
 - lazygit (git-ui 命令行版)
 - ripgrep (搜索工具)
+- openssh ssh工具
+- ouch 解压缩命令行
 ```shell
-pacman -S zsh neovim git make neofetch htop kdwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools openssh
+pacman -S zsh neovim git make neofetch htop kdwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools openssh ouch
 systemctl enable docker
 systemctl start docker
 systemctl enable sshd
@@ -249,6 +251,7 @@ nvim ~/.zshrc
 alias ls=lsd
 alias hex=hexyl
 alias proxy=proxychains
+alias decompress=ouch
 ```
 
 ### node 包管理器
@@ -312,4 +315,26 @@ https://aur.archlinux.org/packages/ttf-weather-icons
 https://aur.archlinux.org/packages/ttf-material-icons-git
 
 paur -S ttf-weather-icons ttf-material-icons-git
+
+### 终端复用工具
+cargo install --locked zellij
+mkdir ~/.config/zellij
+zellij setup --dump-config > ~/.config/zellij/config.kdl
+
+# 自动加载
+echo 'eval "$(zellij setup --generate-auto-start zsh)"' >> ~/.zshrc
+
+# 修改配置
+nvim ~/.config/zellij/config.kdl
+
+keybinds {
+    // 新增
+    unbind "Ctrl o"
+// 注释
+session {
+    //bind "Ctrl o" { SwitchToMode "Normal"; }
+    //bind "Ctrl s" { SwitchToMode "Scroll"; }
+    //bind "d" { Detach; }
+}
+
 ```
