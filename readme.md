@@ -1,8 +1,32 @@
 
 
 ### 基本包
+- zsh 
+- neovim
+- git
+- make
+- neofetch
+- htop
+- kdwalletmanager （用于管理密码）
+- unzip  
+- xclip (剪切板)
+- aria2 (一个简单的下载工具)
+- proxychains-ng (命令行走代理)
+- docker
+- wget
+- partitionmanager (分区工具)
+- ntfs-3g (用于访问ntfs)
+- jq
+- snap-pac (pacman 执行后自动创建快照)
+- grub-btrfs (快照后自动生成grub启动项)
+- inotify-tools (grub-btrfs依赖)
+- pavucontrol (音频控制)
+- alsa-utils (音频控制)
+- playerctl (多媒体控制)
+- lazygit (git-ui 命令行版)
+- ripgrep (搜索工具)
 ```shell
-pacman -S zsh neovim git make neofetch htop kdwalletmanager unzip xlip aria2 proxychains-ng docker
+pacman -S zsh neovim git make neofetch htop kdwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools
 systemctl enable docker
 systemctl start docker
 # 注销后生效
@@ -21,7 +45,7 @@ nvim $HOME/.cargo/config
 replace-with = 'ustc'
 
 [source.ustc]
-registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+registry = "https://mirrors.ustc.edu.cn/crates.io-index/"
 
 # 设置cargo/bin到环境变量
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -48,9 +72,12 @@ cd paru
 makepkg -si
 
 # 安装常用软件
-paru -S google-chrome wezterm feishu-bin netease-cloud-music graftcp
+paru -S google-chrome wezterm feishu-bin netease-cloud-music graftcp visual-studio-code-bin
 # 启动golang代理程序服务
 systemctl enable graftcp-local
+
+# 设置网易云音乐缩放
+--force-device-scale-factor=1.4
 ```
 
 ### 终端相关
@@ -93,6 +120,8 @@ nvim $HOME/.config/wezterm/wezterm.lua
 
 ### vim
 ```shell
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+
 ```
 
 ### 用于替换unix命令
@@ -113,4 +142,59 @@ curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir "./.fnm" --
 source ~/.zshrc
 fnm list-remote
 fnm install ${version}
+
+# vim依赖这个
+npm install -g prettier
+```
+
+### 定时快照备份
+```shell
+# 先开启snapper定时器
+systemctl enable --now snapper-timeline.timer
+systemctl enable --now snapper-cleanup.timer
+
+sudo snapper -c root create-config /
+sudo snapper -c home create-config /home
+
+# 保存4份快照
+NUMBER_LIMIT="4"
+# 每周快照一次
+TIMELINE_MIN_AGE="1800"
+TIMELINE_LIMIT_HOURLY="0"
+TIMELINE_LIMIT_DAILY="7"
+TIMELINE_LIMIT_WEEKLY="0"
+TIMELINE_LIMIT_MONTHLY="0"
+TIMELINE_LIMIT_YEARLY="0"
+
+# 开启系统滚动更新前备份
+# 自动检测快照并且加入到启动项
+systemctl enable grub-btrfsd
+```
+
+### 美化 
+#### eww安装
+```shell
+git clone https://github.com/elkowar/eww && cd eww  && cargo install cd .. && rm -rf eww
+```
+
+#### polybar
+```shell
+sudo pacman -S polybar
+```
+
+#### picom
+```shell
+# 多媒体以及合成器
+sudo pacman -S picom mpd ncmpcpp
+systemctl enable mpd
+# 天气插件
+paru -S weather
+```
+
+### 字体
+```shell
+https://aur.archlinux.org/packages/ttf-weather-icons
+https://aur.archlinux.org/packages/ttf-material-icons-git
+
+paur -S ttf-weather-icons ttf-material-icons-git
 ```
