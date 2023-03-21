@@ -233,6 +233,10 @@ mkdir -p $HOME/.config/wezterm
 touch $HOME/.config/wezterm/wezterm.lua
 nvim $HOME/.config/wezterm/wezterm.lua
 
+# 配置终端 alacritty
+mkdir -p ~/.config/alacritty/themes
+git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+
 ```
 
 ### vim
@@ -280,15 +284,17 @@ return {
 
 ### 用于替换unix命令
 ```shell
-pacman -S zellij lsd bat hexyl skim fd dust xh
+pacman -S zellij lsd bat hexyl skim fd dust xh zoxide duf
 
 nvim ~/.zshrc
-
+eval "$(zoxide init zsh)"
 # 其它命令就不重命名了，以免影响其它脚本
 alias ls=lsd
 alias hex=hexyl
 alias proxy=proxychains
 alias decompress=ouch
+alias cd=zoxide
+alias df=duf
 ```
 
 ### node 包管理器
@@ -375,3 +381,4 @@ session {
 }
 
 ```
+
