@@ -141,8 +141,9 @@ reboot
 - ripgrep (搜索工具)
 - openssh ssh工具
 - ouch 解压缩命令行
+- fzf 模糊搜索工具
 ```shell
-pacman -S zsh neovim git make neofetch htop kdwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools openssh ouch
+pacman -S zsh neovim git make neofetch htop kdwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools openssh ouch fzf
 systemctl enable docker
 systemctl start docker
 systemctl enable sshd
@@ -295,6 +296,7 @@ alias proxy=proxychains
 alias decompress=ouch
 alias cd=zoxide
 alias df=duf
+alias hs='print -z $(cat ~/.zsh_history | fzf | tr ";" "\n" | tail -n 1)'
 ```
 
 ### node 包管理器
