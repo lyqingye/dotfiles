@@ -332,6 +332,9 @@ TIMELINE_LIMIT_YEARLY="0"
 # 开启系统滚动更新前备份
 # 自动检测快照并且加入到启动项
 systemctl enable grub-btrfsd
+
+# 第一次使用快照回滚需要输入
+snapper --ambit classic rollback
 ```
 
 ### 美化 
