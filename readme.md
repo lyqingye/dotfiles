@@ -412,4 +412,22 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply lyqingye
 sudo mv ./build/chezmoi /usr/local/bin/
 chezmoi update
 ```
+### kdwallet
+```shell
+mkdir ~/.config/environment.d
+nvim ~/.config/environment.d/ssh_askpass.conf
+SSH_ASKPASS='/usr/bin/ksshaskpass'
+SSH_ASKPASS_REQUIRE=prefer
+
+nvim ~/.config/environment.d/git_askpass.conf
+GIT_ASKPASS='/usr/bin/ksshaskpass'
+
+mkdir -p ~/.local/share/dbus-1/services/
+nvim ~/.local/share/dbus-1/services/org.freedesktop.secrets.service
+[D-BUS Service]
+Name=org.freedesktop.secrets
+Exec=/usr/bin/kwalletd5
+
+#logout
+```
 
