@@ -218,6 +218,9 @@ aria2c https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.2/Hack.zip
 mkdir -p ~/.local/share/fonts/
 unzip Hack.zip -d ~/.local/share/fonts/
 rm -rf Hack.zip
+aria2c https://download.jetbrains.com.cn/fonts/JetBrainsMono-2.304.zip
+unzip JetBrainsMono-2.304.zip "*/ttf/*.ttf" -d ~/.local/share/
+rm -rf JetBrainsMono-2.304.zip
 fc-cache
 
 # oh-my-zsh
