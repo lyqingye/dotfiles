@@ -178,12 +178,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 ### 安装go
 ```shell
-# gvm
-bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-source /home/lyqingye/.gvm/scripts/gvm
-go install go1.8
-go install go1.20
-
 export GO_VERSION=1.18
 aria2c "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz"
 sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf "go${GO_VERSION}.linux-amd64.tar.gz"
@@ -193,6 +187,11 @@ export PATH=$PATH:/usr/local/go/bin
 export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPRIVATE=github.com/marginxio/*
+
+# gvm
+bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+source /home/lyqingye/.gvm/scripts/gvm
+go install go1.20
 ```
 
 ### 安装包管理器
