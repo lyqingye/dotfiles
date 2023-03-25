@@ -150,6 +150,11 @@ systemctl enable sshd
 # 注销后生效
 sudo usermod -a -G docker lyqingye
 
+/etc/environment
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+SDL_IM_MODULE=fcitx
 ```
 
 ### 安装rust
