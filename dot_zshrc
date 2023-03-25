@@ -18,7 +18,7 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='nvim'
 
 # rust 
-source "${HOME}/.cargo/env"
+#source "${HOME}/.cargo/env"
 export PATH="${HOME}/.cargo/bin:$PATH"
 
 # starship
@@ -33,10 +33,19 @@ alias proxy=proxychains
 alias decompress=ouch
 alias df=duf
 alias cd=z
+alias dotfiles=chezmoi
 alias hs='print -z $(cat ~/.zsh_history | fzf | tr ";" "\n" | tail -n 1)'
 
+fh() {
+    BUFFER=$(tac ~/.zsh_history | awk -F ';' '{print $2}' | fzf --preview 'echo {}' --height=40% --reverse)
+    echo "$BUFFER" | xclip -selection clipboard
+    zle reset-prompt
+}
+zle -N fh
+bindkey '^r' fh
+
 # fnm
-export PATH="${HOME}/.local/share/fnm:$PATH"
+export PATH="${HOME}/.fnm:$PATH"
 eval "`fnm env`"
 
 # golang 
@@ -46,4 +55,3 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPRIVATE=github.com/marginxio/*
 eval "$(zellij setup --generate-auto-start zsh)"
-
