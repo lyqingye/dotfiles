@@ -202,7 +202,7 @@ cd paru
 makepkg -si
 
 # 安装常用软件
-paru -S google-chrome wezterm feishu-bin netease-cloud-music graftcp visual-studio-code-bin fcitx5-pinyin-moegirl
+paru -S google-chrome wezterm feishu-bin netease-cloud-music graftcp visual-studio-code-bin fcitx5-pinyin-moegirl linuxqq
 # 启动golang代理程序服务
 systemctl enable graftcp-local
 
