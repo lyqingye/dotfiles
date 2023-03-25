@@ -157,6 +157,8 @@ XMODIFIERS=@im=fcitx
 SDL_IM_MODULE=fcitx
 ```
 
+
+
 ### 安装rust
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -396,5 +398,16 @@ session {
     //bind "d" { Detach; }
 }
 
+```
+
+### dotfiles
+```shell
+ssh-keygen 
+cat ~/.ssh/id_rsa.pub 
+# add to your key to github profile
+
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply lyqingye
+sudo mv ./build/chezmoi /usr/local/bin/
+chezmoi update
 ```
 
