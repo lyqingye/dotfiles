@@ -143,7 +143,7 @@ reboot
 - ouch 解压缩命令行
 - fzf 模糊搜索工具
 ```shell
-pacman -S zsh neovim git make neofetch htop kwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools openssh ouch fzf sof-firmware alsa-firmware alsa-ucm-conf adobe-source-han-serif-cn-fonts wqy-zenhei noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ark packagekit-qt5 packagekit appstream-qt appstream gwenview kate
+pacman -S zsh neovim git make neofetch htop kwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools openssh ouch fzf sof-firmware alsa-firmware alsa-ucm-conf adobe-source-han-serif-cn-fonts wqy-zenhei noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ark packagekit-qt5 packagekit appstream-qt appstream gwenview kate fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki fcitx5-material-color
 systemctl enable docker
 systemctl start docker
 systemctl enable sshd
@@ -190,7 +190,7 @@ cd paru
 makepkg -si
 
 # 安装常用软件
-paru -S google-chrome wezterm feishu-bin netease-cloud-music graftcp visual-studio-code-bin
+paru -S google-chrome wezterm feishu-bin netease-cloud-music graftcp visual-studio-code-bin fcitx5-pinyin-moegirl
 # 启动golang代理程序服务
 systemctl enable graftcp-local
 
