@@ -143,7 +143,7 @@ reboot
 - ouch 解压缩命令行
 - fzf 模糊搜索工具
 ```shell
-pacman -S zsh neovim git make neofetch htop kwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools openssh ouch fzf sof-firmware alsa-firmware alsa-ucm-conf adobe-source-han-serif-cn-fonts wqy-zenhei noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ark packagekit-qt5 packagekit appstream-qt appstream gwenview kate fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki fcitx5-material-color
+pacman -S zsh neovim git make neofetch htop kwalletmanager unzip xclip aria2 proxychains-ng docker wget partitionmanager ntfs-3g jq snap-pac grub-btrfs pavucontrol alsa-utils lazygit playerctl ripgrep inotify-tools openssh ouch fzf sof-firmware alsa-firmware alsa-ucm-conf adobe-source-han-serif-cn-fonts wqy-zenhei noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ark packagekit-qt5 packagekit appstream-qt appstream gwenview kate fcitx5-im fcitx5-chinese-addons fcitx5-pinyin-zhwiki fcitx5-material-color github-cli
 systemctl enable docker
 systemctl start docker
 systemctl enable sshd
@@ -156,8 +156,6 @@ QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 SDL_IM_MODULE=fcitx
 ```
-
-
 
 ### 安装rust
 ```shell
@@ -328,6 +326,20 @@ npm install -g prettier
 
 ### 定时快照备份
 ```shell
+# 自动检测快照并且加入到启动项
+systemctl enable grub-btrfsd
+
+# 快照启动默认是只读的，这样会有问题，所有加入以下hook允许快照启动后文件系统可写
+sudo nvim /etc/mkinitcpio.conf
+# HOOKS加入
+grub-btrfs-overlayfs
+sudo mkinitcpio -P
+
+# 安装管理工具
+btrfs-assistant
+
+
+# TODO
 # 先开启snapper定时器
 systemctl enable --now snapper-timeline.timer
 systemctl enable --now snapper-cleanup.timer
@@ -346,8 +358,7 @@ TIMELINE_LIMIT_MONTHLY="0"
 TIMELINE_LIMIT_YEARLY="0"
 
 # 开启系统滚动更新前备份
-# 自动检测快照并且加入到启动项
-systemctl enable grub-btrfsd
+
 
 # 第一次使用快照回滚需要输入
 snapper --ambit classic rollback
