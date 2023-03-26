@@ -207,6 +207,7 @@ paru -S google-chrome wezterm feishu-bin netease-cloud-music graftcp visual-stud
 systemctl enable graftcp-local
 
 # 设置网易云音乐缩放
+sudo nvim /usr/share/applications/netease-cloud-music.deskto
 --force-device-scale-factor=1.4
 ```
 
