@@ -21,12 +21,14 @@ mount --mkdir /dev/{引导分区} /mnt/boot
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@var
+btrfs subvolume create /mnt/@snapshots
 
 # 挂载子卷
 umount /mnt
 mount -o noatime,nodiratime,subvol=@ /dev/{系统分区} /mnt
 mount --mkdir -o noatime,nodiratime,subvol=@home /dev/{系统分区} /mnt/home
 mount --mkdir -o noatime,nodiratime,subvol=@var /dev/{系统分区} /mnt/var
+mount --mkdir -o noatime,nodiratime,subvol=@snapshots /dev/{系统分区} /mnt/.snapshots
 
 # 开始安装基本的操作系统
 pacstrap -i /mnt base base-devel linux linux-firmware snapper
