@@ -34,15 +34,15 @@ alias decompress=ouch
 alias df=duf
 alias cd=z
 alias dotfiles=chezmoi
-alias hs='print -z $(cat ~/.zsh_history | fzf | tr ";" "\n" | tail -n 1)'
 
-fh() {
-    BUFFER=$(tac ~/.zsh_history | awk -F ';' '{print $2}' | fzf --preview 'echo {}' --height=40% --reverse)
-    echo "$BUFFER" | xclip -selection clipboard
-    zle reset-prompt
-}
-zle -N fh
-bindkey '^r' fh
+#alias hs='print -z $(cat ~/.zsh_history | fzf | tr ";" "\n" | tail -n 1)'
+# fh() {
+#     BUFFER=$(tac ~/.zsh_history | awk -F ';' '{print $2}' | fzf --preview 'echo {}' --height=40% --reverse)
+#     echo "$BUFFER" | xclip -selection clipboard
+#     zle reset-prompt
+# }
+# zle -N fh
+# bindkey '^r' fh
 
 # fnm
 export PATH="${HOME}/.fnm:$PATH"
@@ -54,4 +54,8 @@ export PATH=$PATH:${HOME}/go/bin
 export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOPRIVATE=github.com/marginxio/*
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 eval "$(zellij setup --generate-auto-start zsh)"
