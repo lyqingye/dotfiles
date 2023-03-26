@@ -157,21 +157,24 @@ XMODIFIERS=@im=fcitx
 SDL_IM_MODULE=fcitx
 ```
 
+### 字体
+```shell
+paur -S ttf-weather-icons ttf-material-icons-git
+aria2c https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.2/Hack.zip
+mkdir -p ~/.local/share/fonts/
+unzip Hack.zip -d ~/.local/share/fonts/
+rm -rf Hack.zip
+aria2c https://download.jetbrains.com.cn/fonts/JetBrainsMono-2.304.zip
+unzip JetBrainsMono-2.304.zip "*/ttf/*.ttf" -d ~/.local/share/
+rm -rf JetBrainsMono-2.304.zip
+aria2c https://dtinth.github.io/comic-mono-font/ComicMono-Bold.ttf
+mv ComicMono-Bold.ttf ~/.local/share/fonts/
+fc-cache
+```
+
 ### 安装rust
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-# 切换源
-nvim $HOME/.cargo/config
-
-[source.crates-io]
-replace-with = 'ustc'
-
-[source.ustc]
-registry = "https://mirrors.ustc.edu.cn/crates.io-index/"
-
-# 设置cargo/bin到环境变量
-export PATH="$HOME/.cargo/bin:$PATH"
 ```
 
 ### 安装go
@@ -212,16 +215,6 @@ sudo nvim /usr/share/applications/netease-cloud-music.deskto
 ### 终端相关
 
 ```shell
-# 安装字体
-aria2c https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.2/Hack.zip
-mkdir -p ~/.local/share/fonts/
-unzip Hack.zip -d ~/.local/share/fonts/
-rm -rf Hack.zip
-aria2c https://download.jetbrains.com.cn/fonts/JetBrainsMono-2.304.zip
-unzip JetBrainsMono-2.304.zip "*/ttf/*.ttf" -d ~/.local/share/
-rm -rf JetBrainsMono-2.304.zip
-fc-cache
-
 # oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
@@ -384,35 +377,6 @@ systemctl enable mpd
 paru -S weather
 ```
 
-### 字体
-```shell
-https://aur.archlinux.org/packages/ttf-weather-icons
-https://aur.archlinux.org/packages/ttf-material-icons-git
-
-paur -S ttf-weather-icons ttf-material-icons-git
-
-### 终端复用工具
-cargo install --locked zellij
-mkdir ~/.config/zellij
-zellij setup --dump-config > ~/.config/zellij/config.kdl
-
-# 自动加载
-echo 'eval "$(zellij setup --generate-auto-start zsh)"' >> ~/.zshrc
-
-# 修改配置
-nvim ~/.config/zellij/config.kdl
-
-keybinds {
-    // 新增
-    unbind "Ctrl o"
-// 注释
-session {
-    //bind "Ctrl o" { SwitchToMode "Normal"; }
-    //bind "Ctrl s" { SwitchToMode "Scroll"; }
-    //bind "d" { Detach; }
-}
-
-```
 
 ### dotfiles
 ```shell
