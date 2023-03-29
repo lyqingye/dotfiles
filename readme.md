@@ -409,3 +409,35 @@ Exec=/usr/bin/kwalletd5
 #logout
 ```
 
+### 显卡驱动
+```shell
+sudo pacman -S mesa lib32-mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon
+
+```
+
+
+### 虚拟机
+```shell
+sudo pacman -S qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat virt-manager libvirt edk2-ovmf
+
+systemctl enable --now libvirtd
+sudo virsh net-start default
+sudo virsh net-autostart default
+sudo usermod -a -G libvirt lyqingye
+sudo usermod -a -G kvm lyqingye
+
+
+# 编辑 /etc/polkit-1/rules.d/50-libvirt.rules
+/* Allow users in kvm group to manage the libvirt
+daemon without authentication */
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.libvirt.unix.manage" &&
+        subject.isInGroup("kvm")) {
+            return polkit.Result.YES;
+    }
+});
+
+
+sudo systemctl restart libvirtd
+reboot
+```
